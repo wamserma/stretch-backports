@@ -1,0 +1,6 @@
+opensc-0.19.0:
+    build: .
+    command: /bin/bash /scripts/opensc-0.19.0.sh nocleanup
+
+    volumes:
+        - ./docker-out:/pkgs/
