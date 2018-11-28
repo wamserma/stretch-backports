@@ -28,3 +28,15 @@ docker rmi $(docker images -a --filter=dangling=true -q)
 # clean exited and done machines (be careful!)
 docker rm $(docker ps --filter=status=exited --filter=status=created -q)
 ```
+
+## Build behind proxy
+
+If you are building behind a proxy, you may want to add the following line to the beginning of your `Dockerfile`, before doing any other apt operations:
+```
+RUN echo "Acquire::http::Proxy \"http://your.proxy:1234\";"
+```
+and add 
+```
+export http_proxy=http://your.proxy:1234
+```
+to the beginning of the build scripts in `scripts`.
