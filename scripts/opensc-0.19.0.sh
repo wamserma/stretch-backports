@@ -15,7 +15,7 @@ fakeroot debian/rules binary
 dpkg-buildpackage -us -uc
 
 # copy results
-cp ../*.deb /pkgs/.
+sudo /scripts/export-debs.sh ${HUID:-1000} ${HGID:-1000}
 
 if [ "$1" != "nocleanup" ]; then
   sudo apt -y remove opensc-build-deps && sudo apt autoremove

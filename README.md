@@ -15,6 +15,12 @@ The Docker images are intended for one-shot usage, so we do not make aggressive 
 Example use:
 ```
 docker-compose build # required only once or after updates
+docker-compose run -e HUID=`id -u` -e HGID=`id -g` opensc-0.19.0 # build the specified backport
+```
+
+In case there is only a single user on the system running the docker container, the user will likely have a UID and GID of 1000. In that case the IDs need not be passed to the container, as it will defualt to these values. One may also specify arbitrary other numerical IDs to define the owner of the resulting packages.
+
+```
 docker-compose run opensc-0.19.0 # build the specified backport
 ```
 

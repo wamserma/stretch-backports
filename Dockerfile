@@ -13,10 +13,15 @@ RUN apt update && apt install -y \
     equivs; \
     apt -y -t stretch-backports install debhelper; \
     apt -y autoremove
-RUN useradd -ms /bin/bash builder && usermod -aG sudo builder && echo builder ALL = NOPASSWD:/usr/bin/mk-build-deps | tee -a /etc/sudoers 
+RUN useradd -ms /bin/bash builder && usermod -aG sudo builder && echo builder ALL = NOPASSWD:/usr/bin/mk-build-deps, NOPASSWD:/scripts/export-debs.sh | tee -a /etc/sudoers 
+
+ADD scripts/ /scripts/
+RUN chown root:builder /scripts/export-debs.sh
+RUN chmod 0500 /scripts/export-debs.sh
+
+# switch user
 USER builder
 WORKDIR  /home/builder
-ADD scripts/ /scripts/
 
 # prepare ~/.gpg
 RUN gpg -k
